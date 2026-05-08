@@ -437,14 +437,32 @@ class _ProgressivePanel extends StatelessWidget {
                 Row(
                   children: [
                     const Text(
-                      'Bars per step',
+                      '增加步长',
                       style: TextStyle(color: Color(0xFF8888AA), fontSize: 13),
                     ),
                     const Spacer(),
-                    ...[ 1, 2, 4, 8 ].map((n) => Padding(
+                    ...[1, 2, 5, 10].map((n) => Padding(
                       padding: const EdgeInsets.only(left: 6),
                       child: _Chip(
-                        label: '$n',
+                        label: '+$n',
+                        selected: p.stepSize == n,
+                        onTap: () => ctrl.updateProgressive(p.copyWith(stepSize: n)),
+                      ),
+                    )),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Text(
+                      '持续时间',
+                      style: TextStyle(color: Color(0xFF8888AA), fontSize: 13),
+                    ),
+                    const Spacer(),
+                    ...[1, 2, 4, 8].map((n) => Padding(
+                      padding: const EdgeInsets.only(left: 6),
+                      child: _Chip(
+                        label: '${n}小节',
                         selected: p.barsPerStep == n,
                         onTap: () => ctrl.updateProgressive(p.copyWith(barsPerStep: n)),
                       ),

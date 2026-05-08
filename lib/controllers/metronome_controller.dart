@@ -27,12 +27,14 @@ class ProgressiveSettings {
   final bool enabled;
   final int startBpm;
   final int endBpm;
-  final int barsPerStep;
+  final int stepSize;    // 每步增加的 BPM 量
+  final int barsPerStep; // 每个速度持续的小节数
 
   const ProgressiveSettings({
     this.enabled = false,
     this.startBpm = 80,
     this.endBpm = 140,
+    this.stepSize = 1,
     this.barsPerStep = 4,
   });
 
@@ -40,11 +42,13 @@ class ProgressiveSettings {
     bool? enabled,
     int? startBpm,
     int? endBpm,
+    int? stepSize,
     int? barsPerStep,
   }) => ProgressiveSettings(
     enabled: enabled ?? this.enabled,
     startBpm: startBpm ?? this.startBpm,
     endBpm: endBpm ?? this.endBpm,
+    stepSize: stepSize ?? this.stepSize,
     barsPerStep: barsPerStep ?? this.barsPerStep,
   );
 }
@@ -306,9 +310,11 @@ class MetronomeController extends ChangeNotifier {
       _barsPlayedAtCurrentBpm = 0;
       final direction = _progressive.endBpm >= _progressive.startBpm ? 1 : -1;
       if (direction > 0 && _progressiveBpm < _progressive.endBpm) {
-        _progressiveBpm++;
+        _progressiveBpm = (_progressiveBpm + _progressive.stepSize).clamp(
+            _progressive.startBpm, _progressive.endBpm);
       } else if (direction < 0 && _progressiveBpm > _progressive.endBpm) {
-        _progressiveBpm--;
+        _progressiveBpm = (_progressiveBpm - _progressive.stepSize).clamp(
+            _progressive.endBpm, _progressive.startBpm);
       }
       _bpm = _progressiveBpm;
       _updateProgressRatio();
