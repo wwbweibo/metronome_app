@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+
+  <rect width="1024" height="1024" rx="220" ry="220" fill="#ffffff"/>
+
+  <!--
+    瘦版等腰梯形:
+      TL(402,265) TR(622,265)  上边宽 220
+      BL(248,800) BR(776,800)  下边宽 528
+
+    侧边切线 unit:
+      左 BL→TL: (154,-535)/len ≈ (0.277,-0.961)
+      右 TR→BR: (154, 535)/len ≈ (0.277, 0.961)
+
+    四段三次贝塞尔，切线方向与侧边对齐保证过渡自然。
+  -->
+  <path
+    d="
+      M 414,265
+      C 448,142  576,142  610,265
+      L 766,800
+      C 672,650  352,650  258,800
+      Z
+    "
+    fill="none"
+    stroke="#1c1c1c"
+    stroke-width="28"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!--
+    摆杆: 轴心在底部中央 (512,800)，朝上偏右 20°，长 660px
+    末端 = (512+660·sin20°, 800−660·cos20°) ≈ (738, 180)
+    摆锤在末端（超出顶部弧线，清晰可见）
+  -->
+  <line
+    x1="512" y1="800"
+    x2="700" y2="280"
+    stroke="#1c1c1c"
+    stroke-width="22"
+    stroke-linecap="round"
+  />
+  <circle cx="700" cy="280" r="38" fill="#1c1c1c"/>
+
+  <!-- 中心竖线 -->
+  <line x1="512" y1="285" x2="512" y2="655"
+        stroke="#1c1c1c" stroke-width="28" stroke-linecap="round"/>
+
+</svg>
