@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 import '../models/time_signature.dart';
 import '../services/audio_service.dart';
 import '../services/beat_detector.dart';
@@ -118,7 +117,6 @@ class MetronomeController extends ChangeNotifier {
       _updateProgressRatio();
     }
     _scheduleTimer();
-    WakelockPlus.enable();
     notifyListeners();
   }
 
@@ -128,7 +126,6 @@ class MetronomeController extends ChangeNotifier {
     _timer = null;
     _currentBeat = 0;
     _progressRatio = 0;
-    WakelockPlus.disable();
     notifyListeners();
   }
 
