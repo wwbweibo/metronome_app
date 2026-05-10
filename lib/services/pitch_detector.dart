@@ -188,10 +188,10 @@ class PitchDetector {
   double _correctElectricGuitarHarmonic(double freq, List<double> samples) {
     var corrected = freq;
 
-    // If YIN locked to the first harmonic, the subharmonic can still show a
-    // strong normalized autocorrelation. Prefer it only when it is plausible,
-    // because electric guitar pickups often emphasize octave harmonics.
-    for (final divisor in [2.0, 3.0]) {
+    // If YIN locked to the octave harmonic, the subharmonic can still show a
+    // strong normalized autocorrelation. Avoid third-harmonic correction here:
+    // a correct high E string at E4 can otherwise be folded down to A2.
+    for (final divisor in [2.0]) {
       final sub = corrected / divisor;
       if (sub < _minGuitarFreq) continue;
       final subCorr = _normalizedCorrelation(samples, sub);
